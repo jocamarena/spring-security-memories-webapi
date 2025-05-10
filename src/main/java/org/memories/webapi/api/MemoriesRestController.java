@@ -1,5 +1,6 @@
 package org.memories.webapi.api;
 
+import org.memories.webapi.security.AuthenticatedUser;
 import org.memories.webapi.service.MemoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,13 +19,13 @@ public class MemoriesRestController {
         this.memoryService = memoryService;
     }
     @GetMapping
-    public String getAllMemoriesByUsername(@AuthenticationPrincipal Principal principal) {
-        String username = principal.getName();
+    public String getAllMemoriesByUsername(@AuthenticationPrincipal AuthenticatedUser authenticatedUser) {
+        String username = authenticatedUser.getUsername();
         return memoryService.findAllByUserName(username).toString();
     }
     @PostMapping
-    public ResponseEntity<String> createMemory(@AuthenticationPrincipal Principal principal) {
-        String username = principal.getName();
+    public ResponseEntity<String> createMemory(@AuthenticationPrincipal AuthenticatedUser authenticatedUser) {
+        String username = authenticatedUser.getUsername();
         return ResponseEntity.ok("Memory created for user: " + username);
     }
 }

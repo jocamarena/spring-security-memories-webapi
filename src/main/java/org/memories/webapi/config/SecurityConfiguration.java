@@ -31,6 +31,8 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 );
 
+        http
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
